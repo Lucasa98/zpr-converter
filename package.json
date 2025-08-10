@@ -13,6 +13,7 @@
   "categories": [
     "Other"
   ],
+  "publisher": "LucasSaurin",
   "activationEvents": [],
   "extensionDependencies": [
     "ms-vscode.cpptools"
