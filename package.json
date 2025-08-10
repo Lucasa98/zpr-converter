@@ -1,8 +1,12 @@
 {
   "name": "zpr-converter",
   "displayName": "zpr converter",
-  "description": "extension para generar configuracion de VSCode a partir de archivo zpr (Zinjai)",
+  "description": "Extension para generar configuracion de compilación a partir de archivo zpr (Zinjai)",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lucasa98/zpr-converter"
+  },
   "engines": {
     "vscode": "^1.103.0"
   },
