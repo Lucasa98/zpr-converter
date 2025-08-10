@@ -10,12 +10,15 @@
     "Other"
   ],
   "activationEvents": [],
+  "extensionDependencies": [
+    "ms-vscode.cpptools"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "zpr-converter.helloWorld",
-        "title": "Hello World"
+        "command": "zpr-converter.generate",
+        "title": "Generar tasks.json desde .zpr"
       }
     ]
   },
