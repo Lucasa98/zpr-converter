@@ -1,8 +1,10 @@
-# zpr-converter
+# ZPR Converter
 
 Extensión de VSCode para generar configuración de compilación para proyecto en C++ a partir de .zpr (proyecto de Zinjai).
 
 ## Uso
+
+Instalar desde el [marketplace](https://marketplace.visualstudio.com/items?itemName=LucasSaurin.zpr-converter).
 
 Puede ejecutar el comando `zpr-converter.generate` desde la barra de comandos (`ctrl+shift+p`) y escribiendo `zpr-converter: generar tasks.json desde .zpr`.
 
