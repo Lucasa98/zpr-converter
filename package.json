@@ -24,7 +24,7 @@
     "commands": [
       {
         "command": "zpr-converter.generate",
-        "title": "zpr-converter: generar tasks.json desde .zpr"
+        "title": "ZPR: generar tasks.json desde .zpr"
       }
     ]
   },
