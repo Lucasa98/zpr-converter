@@ -15,9 +15,7 @@ async function getCpp(config: ZprConfig): Promise<vscode.Uri> {
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	console.log('Congratulations, your extension "zpr-converter" is now active!');
-
-	const disposable = vscode.commands.registerCommand('zpr-converter.generate', async () => {
+	context.subscriptions.push(vscode.commands.registerCommand('zpr-converter.generate', async () => {
 		if (!vscode.workspace.workspaceFolders) {
 			vscode.window.showErrorMessage('Debe haber un workspace abierto.');
 			return;
@@ -47,9 +45,16 @@ export function activate(context: vscode.ExtensionContext) {
 			++i;
 		const zprUri: vscode.Uri = zprFiles[i];
 		await generateTaskJson(zprUri);
-	});
+	}));
 
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(vscode.commands.registerCommand('zpr-converter.generateFromFile', async (zpr: vscode.Uri) => {
+		if (!zpr) {
+			vscode.window.showWarningMessage('No se seleccionó archivo zpr. Se procede a usar el comando "ZPR: generar tasks.json..."');
+			vscode.commands.executeCommand('zpr-converter.generate');
+			return;
+		}
+		await generateTaskJson(zpr);
+	}))
 }
 
 // This method is called when your extension is deactivated

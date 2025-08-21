@@ -24,9 +24,36 @@
     "commands": [
       {
         "command": "zpr-converter.generate",
-        "title": "ZPR: generar tasks.json desde .zpr"
+        "title": "ZPR: generar tasks.json..."
+      },
+      {
+        "command": "zpr-converter.generateFromFile",
+        "title": "ZPR: generar tasks.json para este .zpr"
       }
-    ]
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceExtname == .zpr",
+          "command": "zpr-converter.generateFromFile",
+          "group": "zpr"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "when": "resourceExtname == .zpr",
+          "command": "zpr-converter.generateFromFile",
+          "group": "zpr"
+        }
+      ],
+      "explorer/context": [
+        {
+          "when": "resourceExtname == .zpr",
+          "command": "zpr-converter.generateFromFile",
+          "group": "zpr"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
