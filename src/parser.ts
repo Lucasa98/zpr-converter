@@ -35,7 +35,17 @@ export function parseZpr(filePath: string): ZprConfig {
 
     // Leer .zpr
     const content = fs.readFileSync(filePath, 'utf8');
+    let currentSection = "";
     for (const line of content.split(/\r?\n/)) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+
+        // detectar seccion
+        if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
+            currentSection = trimmed.slice(1,-1).toLowerCase();
+            continue;
+        }
+
         // cada parametro y valor del zpr
         const [key, value_comment] = line.split('=').map(elem => elem.trim());
         // eliminar posible comentario inline
@@ -52,14 +62,19 @@ export function parseZpr(filePath: string): ZprConfig {
                 config.output_file = value.trim();
                 break;
             case 'headers_dirs':
-                config.headers_dirs = value.split(';').map(v => solveHeaderDirName(v)).filter(v => v != ' ');
+                config.headers_dirs = value.split(';')
+                    .map(v => solveHeaderDirName(v))
+                    .filter(v => v != ' ');
                 break;
             case 'project_name':
                 config.project_name = value.trim();
                 break;
             case 'path':
-                config.source_paths.push(value.trim());
-            // agregar otros parametros
+                if (currentSection == "source") {
+                    config.source_paths.push(value.trim());
+                }
+                break;
+            // TODO: agregar otros parametros
         }
     }
 

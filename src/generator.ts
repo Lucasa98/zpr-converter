@@ -45,12 +45,18 @@ async function generateTasks(pickedCppUri: vscode.Uri): Promise<string|null> {
 async function applyZpr(task: &any, config: ZprConfig): Promise<boolean>
 {
     if (Array.isArray(task.args)) {
-        const insertIndex = task.args.indexOf('-g') + 1;
+        let insertIndex = task.args.indexOf('-g') + 1;
         if (insertIndex > 0) {
-            task.args.splice(insertIndex, 0, `-std=${config.std_cpp || "c++11"}`);
-            task.args.splice(insertIndex+1, 0, "-I${fileDirname}");
+            task.args.splice(insertIndex++, 0, `-std=${config.std_cpp || "c++11"}`);
+            task.args.splice(insertIndex++, 0, "-I${fileDirname}");
+            config.source_paths.forEach(cppPath => {
+                task.args.splice(insertIndex++, 0, path.join("${fileDirname}", cppPath));
+            });
+            // TODO: tener en cuenta mas parametros del .zpr
         }
-        // TODO: tener en cuenta mas parametros del .zpr
+        if (config.source_paths.length > 1) {
+            task.args = task.args.filter(arg => arg !== "${file}");
+        }
     } else {
         vscode.window.showErrorMessage('No se encontraron argumentos de ejecucion en "tasks.json".');
         return false;
